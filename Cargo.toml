@@ -2,3 +2,6 @@
 name = "rpg"
 version = "0.0.1"
 authors = ["Daniel Wehner <daniel@tag1consulting.com>"]
+
+[dependencies]
+docopt = "0.6.69"
