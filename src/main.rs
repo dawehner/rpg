@@ -14,10 +14,13 @@ fn main() {
 
     // Write the Docopt usage string.
     static USAGE: &'static str = "
-    Usage: rpg [--length=<length>]
+    Usage:
+      rpg [--length=<length>]
+      rpg (-h | --help)
 
     Options:
-        --length=<length>     Length of the random string.
+        -h --help     Show this screen.
+        --length=<length>     Length of the random string [default: 20].
     ";
 
     // let argv = std::env::args();
@@ -27,6 +30,6 @@ fn main() {
                   .unwrap_or_else(|e| e.exit());
 
     let random_string: String = thread_rng().gen_ascii_chars().take(args.flag_length).collect();
-    println!("{:?}", random_string);
+    println!("{}", random_string);
 }
 
