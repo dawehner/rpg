@@ -8,19 +8,40 @@ use rand::{thread_rng, Rng};
 #[derive(Debug, RustcDecodable)]
 struct Args {
     flag_length: usize,
+    flag_type: TargetMode,
 }
+
+#[derive(Debug)]
+enum TargetMode {
+    String,
+    Number,
+}
+
+impl rustc_serialize::Decodable for TargetMode {
+    fn decode<D: rustc_serialize::Decoder>(d: &mut D) -> Result<TargetMode, D::Error> {
+        Ok(match try!(d.read_str()).as_ref() {
+            "s" => TargetMode::String,
+            "string" => TargetMode::String,
+            "n" => TargetMode::Number,
+            "number" => TargetMode::Number,
+            _ => TargetMode::String,
+        })
+    }
+}
+    
 
 fn main() {
 
     // Write the Docopt usage string.
     static USAGE: &'static str = "
     Usage:
-      rpg [--length=<length>]
+      rpg [--length=<length>] [--type=<type>]
       rpg (-h | --help)
 
     Options:
-        -h --help     Show this screen.
+        -h --help             Show this screen.
         --length=<length>     Length of the random string [default: 20].
+        --type=<type>         Target type: s, string for string, n, number for number [default: s]
     ";
 
     // let argv = std::env::args();
@@ -29,7 +50,13 @@ fn main() {
                   .and_then(|d| d.decode())
                   .unwrap_or_else(|e| e.exit());
 
-    let random_string: String = thread_rng().gen_ascii_chars().take(args.flag_length).collect();
+    let ten: i64 = 10;
+    let random_string: String = match args.flag_type {
+        TargetMode::String => thread_rng().gen_ascii_chars().take(args.flag_length).collect(),
+        // @fixme It would be better to just generate a bunch of 1 char numbers.
+        TargetMode::Number => thread_rng().gen_range(0, ten.pow(args.flag_length as u32)).to_string(),
+    };
+
     println!("{}", random_string);
 }
 
