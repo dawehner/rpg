@@ -6,3 +6,4 @@ authors = ["Daniel Wehner <daniel@tag1consulting.com>"]
 [dependencies]
 docopt = "~0.6.11"
 rustc-serialize = "0.3"
+rand = "0.3"

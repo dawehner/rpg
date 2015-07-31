@@ -1,11 +1,13 @@
 extern crate docopt;
 extern crate rustc_serialize;
+extern crate rand;
 
 use docopt::Docopt;
+use rand::{thread_rng, Rng};
 
 #[derive(Debug, RustcDecodable)]
 struct Args {
-    flag_length: i32,
+    flag_length: usize,
 }
 
 fn main() {
@@ -24,5 +26,7 @@ fn main() {
                   .and_then(|d| d.decode())
                   .unwrap_or_else(|e| e.exit());
 
-    println!("{}", args.flag_length);
+    let random_string: String = thread_rng().gen_ascii_chars().take(args.flag_length).collect();
+    println!("{:?}", random_string);
 }
+
