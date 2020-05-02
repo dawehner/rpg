@@ -1,6 +1,13 @@
+## RPG
+
+A very basic tool to generate random passwords, no special letters yet.
+
+### Installation
+
 * git clone
 * cargo build --release
 
+### Usage
 
 ```
  Usage:
