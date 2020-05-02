@@ -7,3 +7,6 @@ authors = ["Daniel Wehner <daniel@tag1consulting.com>"]
 docopt = "~0.6.11"
 rustc-serialize = "0.3"
 rand = "0.7"
+num = "0.2.1"
+num-bigint = "0.2.6"
+num-traits = "0.2.11"
