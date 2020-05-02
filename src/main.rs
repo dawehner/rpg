@@ -4,6 +4,7 @@ extern crate rand;
 
 use docopt::Docopt;
 use rand::{thread_rng, Rng};
+use rand::distributions::Alphanumeric;
 
 #[derive(Debug, RustcDecodable)]
 struct Args {
@@ -54,7 +55,7 @@ fn main() {
 
     let ten: i64 = 10;
     let random_string: String = match args.flag_type {
-        TargetMode::String => thread_rng().gen_ascii_chars().take(args.flag_length).collect(),
+        TargetMode::String => thread_rng().sample_iter(Alphanumeric).take(args.flag_length).collect(),
         // @fixme It would be better to just generate a bunch of 1 char numbers.
         TargetMode::Number => thread_rng().gen_range(0, ten.pow(args.flag_length as u32)).to_string(),
     };
