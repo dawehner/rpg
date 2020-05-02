@@ -19,7 +19,9 @@ enum TargetMode {
 
 impl rustc_serialize::Decodable for TargetMode {
     fn decode<D: rustc_serialize::Decoder>(d: &mut D) -> Result<TargetMode, D::Error> {
-        Ok(match try!(d.read_str()).as_ref() {
+        let str = d.read_str()?;
+        let string = str.as_ref();
+        Ok(match string {
             "s" => TargetMode::String,
             "string" => TargetMode::String,
             "n" => TargetMode::Number,
